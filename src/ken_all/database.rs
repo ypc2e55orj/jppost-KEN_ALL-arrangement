@@ -1,5 +1,5 @@
+use crate::ken_all::ken_all::KenAll;
 use mysql;
-use std::collections::BTreeMap;
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct DatabaseConfig {
@@ -46,5 +46,57 @@ impl Database {
         }
 
         Ok(result_vec)
+    }
+
+    /*
+        CREATE TABLE ken_all
+        (
+            id INT(11) NOT NULL AUTO_INCREMENT,
+            postal_code VARCHAR(255) NOT NULL,
+            prefecture_katakana_half VARCHAR(255) NOT NULL,
+            city_katakana_half VARCHAR(255) NOT NULL,
+            town_katakana_half VARCHAR(255) NOT NULL,
+            prefecture_kanji VARCHAR(255) NOT NULL,
+            city_kanji VARCHAR(255) NOT NULL,
+            town_kanji VARCHAR(255) NOT NULL,
+            PRIMARY KEY(id)
+        )
+        DEFAULT CHARSET=utf8mb4;
+    */
+    pub fn multiple_insert_ken_all(&self, ken_all_vec: Vec<KenAll>) {
+        let ken_all_vec_len = ken_all_vec.len();
+        let columns = String::from("postal_code, prefecture_katakana_half, city_katakana_half, town_katakana_half, prefecture_kanji, city_kanji, town_kanji");
+
+        let mut values = String::from("");
+        let mut current_multiples: usize = 1;
+
+        for val in ken_all_vec {
+            values += &format!(
+                "('{}', '{}', '{}', '{}', '{}', '{}', '{}')",
+                val.postal_code,
+                val.prefecture_katakana_half,
+                val.city_katakana_half,
+                val.town_katakana_half,
+                val.prefecture_kanji,
+                val.city_kanji,
+                val.town_kanji
+            );
+
+            if current_multiples == self.database_config.multiple_insert
+                || current_multiples == ken_all_vec_len
+            {
+                self.query(format!(
+                    "INSERT INTO ken_all({}) VALUES {}",
+                    columns, values
+                ))
+                .expect("Failed to insert a value!");
+
+                values = String::from("");
+                current_multiples = 1;
+            } else {
+                values = values + ", ";
+                current_multiples += 1;
+            }
+        }
     }
 }
