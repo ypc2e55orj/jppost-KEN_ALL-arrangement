@@ -1,0 +1,8 @@
+[database]
+host = 'localhost' # string
+port = 3306 # integer
+user = 'ken_all' # string
+password = 'ken_all' # string
+database_name = 'ken_all' # string
+table_name = 'ken_all' # string
+multiple_insert = 1000 # integer
