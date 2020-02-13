@@ -1,5 +1,5 @@
 [package]
-name = "jppost-KEN_ALL-arrangement"
+name = "jppost_ken_all_arrangement"
 version = "0.1.0"
 authors = ["ypc2e55orj <43885603+ypc2e55orj@users.noreply.github.com>"]
 edition = "2018"
