@@ -34,7 +34,9 @@ impl KenAll {
         Ok(buffer)
     }
 
-    fn sjis_buffer_to_utf8_string(buffer: Vec<u8>) -> Result<String, std::borrow::Cow<'static, str>>{
+    fn sjis_buffer_to_utf8_string(
+        buffer: Vec<u8>,
+    ) -> Result<String, std::borrow::Cow<'static, str>> {
         let mut utf8_content = String::from("");
 
         WINDOWS_31J.decode_to(&buffer, DecoderTrap::Replace, &mut utf8_content)?;
@@ -56,7 +58,8 @@ impl KenAll {
 
     pub fn read(path: &str) -> Vec<KenAll> {
         let buffer = KenAll::read_buffer(path).expect("Failed to read a file!");
-        let utf8_content = KenAll::sjis_buffer_to_utf8_string(buffer).expect("Failed to convert sjis to utf-8!");
+        let utf8_content =
+            KenAll::sjis_buffer_to_utf8_string(buffer).expect("Failed to convert sjis to utf-8!");
 
         KenAll::string_to_vec(utf8_content).expect("Failed to convert csv to struct!")
     }

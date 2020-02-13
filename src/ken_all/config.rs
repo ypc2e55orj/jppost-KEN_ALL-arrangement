@@ -19,6 +19,7 @@ impl Config {
 
         Ok(content)
     }
+
     fn string_to_config(content: String) -> Result<Config, toml::de::Error> {
         let config: Config = toml::from_str(&content)?;
 
