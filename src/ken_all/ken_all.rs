@@ -6,7 +6,7 @@ use std::io::BufReader;
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct KenAll {
-    pub JIS_X_0401_0402: usize,
+    pub jis_x_0401_0402: usize,
     pub old_postal_code: String,
     pub postal_code: String,
     pub prefecture_katakana_half: String,
