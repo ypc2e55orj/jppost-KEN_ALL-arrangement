@@ -86,8 +86,8 @@ impl Database {
                 || current_multiples == ken_all_vec_len
             {
                 self.query(format!(
-                    "INSERT INTO ken_all({}) VALUES {}",
-                    columns, values
+                    "INSERT INTO {}({}) VALUES {}",
+                    self.database_config.table_name, columns, values
                 ))
                 .expect("Failed to insert a value!");
 
